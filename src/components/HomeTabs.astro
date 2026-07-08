@@ -144,15 +144,21 @@
 		const panels = tabsRoot.querySelectorAll('.kb-panel');
 
 		// 各 TOC 条目（li）按其链接锚点归属的面板分类，用于随标签切换显隐。
-		// 锚点 -> 面板：'next-steps' 属首页；'优化' 系列 属优化；其余（如 _top）常驻。
-		const optimAnchors = ['优化', '拓扑优化', '加劲肋优化', '优化求解器', '算例测试'];
+		// 动态建立「标题 id -> 面板」映射：扫描每个面板内所有带 id 的标题，
+		// 这样无论标题文字如何变化（前言/Next steps 等），归类都正确。
+		const anchorToPanel = new Map();
+		panels.forEach((panel) => {
+			const pname = panel.getAttribute('data-panel');
+			panel.querySelectorAll('h2[id], h3[id], h4[id]').forEach((head) => {
+				anchorToPanel.set(head.id, pname);
+			});
+		});
 		const tocItems = Array.from(document.querySelectorAll('.right-sidebar-panel li'));
 		const classifyTocItem = (li) => {
 			const href = li.querySelector('a')?.getAttribute('href') || '';
 			const anchor = decodeURIComponent(href.replace(/^#/, ''));
-			if (anchor === 'next-steps') return 'home';
-			if (optimAnchors.includes(anchor)) return 'optim';
-			return 'common';
+			// _top（Overview）等不在任何面板内的锚点视为常驻
+			return anchorToPanel.get(anchor) || 'common';
 		};
 
 		const activateTab = (target) => {
