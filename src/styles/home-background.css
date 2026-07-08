@@ -1,0 +1,64 @@
+body {
+	background: #0a0e18;
+}
+
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background: url('../assets/backGround.png') center / cover no-repeat;
+}
+
+:root[data-theme='dark'] body::before {
+	background: url('../assets/backGround_dark.png') center / cover no-repeat;
+}
+
+.hero,
+.sl-markdown-content,
+.right-sidebar-container {
+	position: relative;
+	z-index: 1;
+}
+
+.sl-markdown-content {
+	padding: 1.25rem;
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.01);
+	backdrop-filter: blur(50px);
+}
+
+:root[data-theme='dark'] .sl-markdown-content {
+	background: rgba(0, 0, 0, 0.01);
+}
+
+/* On this page 右侧栏:默认滑出视口,仅留 10px 触发边悬停滑入 */
+@media (min-width: 72rem) {
+	.right-sidebar {
+		/* 锚定在视口右侧,给确定宽度,几何关系明确 */
+		right: 0;
+		left: auto;
+		width: var(--sl-sidebar-width);
+		/* 默认向右平移自身宽度,留 10px 在视口内作为触发区 */
+		transform: translateX(calc(100% - 12px));
+		transition: transform 0.25s ease;
+		background: rgba(128, 128, 128, 0.25);
+	}
+
+	.right-sidebar:hover {
+		transform: translateX(0);
+		background: transparent;
+	}
+
+	.right-sidebar-panel .sl-container {
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+
+	.right-sidebar:hover .sl-container {
+		opacity: 1;
+		transition-delay: 0.05s;
+	}
+}

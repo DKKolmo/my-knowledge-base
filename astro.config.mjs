@@ -10,6 +10,7 @@ export default defineConfig({
     starlight({
       title: "Kolmo's Blog",
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/DKKolmo/my-knowledge-base' }],
+      customCss: ['./src/styles/home-background.css'],
       sidebar: [
         {
           label: '学习笔记',

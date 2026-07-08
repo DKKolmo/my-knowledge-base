@@ -1,0 +1,137 @@
+---
+/**
+ * 首页顶部导航栏 + 标签切换面板。
+ * - 默认显示「首页」面板（即使 JS 失败也可见，渐进增强）。
+ * - 点击不同标签切换对应面板内容。
+ * 样式 scoped（自动加 data-astro-cid），仅作用于本组件，不污染全局。
+ */
+---
+
+<div class="kb-tabs" data-tabs>
+	<div class="kb-tabbar" role="tablist" aria-label="主页内容导航">
+		<button class="kb-tab-btn" type="button" data-tab="home" role="tab" id="kb-tab-home" aria-controls="kb-panel-home" aria-selected="true">首页</button>
+		<button class="kb-tab-btn" type="button" data-tab="optim" role="tab" id="kb-tab-optim" aria-controls="kb-panel-optim" aria-selected="false">优化</button>
+		<button class="kb-tab-btn kb-tab-btn--placeholder" type="button" data-tab="more" role="tab" id="kb-tab-more" aria-controls="kb-panel-more" aria-selected="false" aria-disabled="true" tabindex="-1" title="待添加">·</button>
+	</div>
+
+	<section class="kb-panel" id="kb-panel-home" role="tabpanel" aria-labelledby="kb-tab-home" data-panel="home">
+		<slot>首页内容</slot>
+	</section>
+
+	<section class="kb-panel" id="kb-panel-optim" role="tabpanel" aria-labelledby="kb-tab-optim" data-panel="optim" hidden>
+		<slot name="optim">优化内容</slot>
+	</section>
+
+	<section class="kb-panel" id="kb-panel-more" role="tabpanel" aria-labelledby="kb-tab-more" data-panel="more" hidden>
+		<slot name="more">占位内容</slot>
+	</section>
+</div>
+
+<style is:global>
+	/* 首页加宽：hero / 导航栏 / 毛玻璃正文都在同一个 .sl-container 内，
+	   覆盖其最大宽度即可三处一起加宽。本组件仅在首页加载，不影响其他页面。 */
+	.sl-container {
+		max-width: 72rem;
+	}
+	/* 首页(hero 页)让右侧目录容器脱离 flex 流（不占布局宽度，不挤压正文），
+	   但保留内层 .right-sidebar（本就是 position: fixed）的悬停滑入触发条。 */
+	html[data-has-hero] .right-sidebar-container {
+		position: absolute;
+		width: 0;
+	}
+	html[data-has-hero] .main-pane {
+		width: 100%;
+		--sl-content-margin-inline: auto;
+	}
+</style>
+
+<style>
+	.kb-tabs {
+		position: relative;
+		z-index: 1;
+		margin-top: 1.75rem;
+	}
+	.kb-tabbar {
+		display: flex;
+		width: 100%;
+		gap: 0.25rem;
+		margin: 0 auto 1.75rem;
+		padding: 0.35rem;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: 0.625rem;
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+	}
+	.kb-tab-btn {
+		flex: 1 1 0;
+		appearance: none;
+		border: 0;
+		border-radius: 0.4rem;
+		padding: 0.45rem 1.15rem;
+		background: transparent;
+		color: var(--sl-color-gray-2, #b4b4b4);
+		font: inherit;
+		font-size: var(--sl-text-sm, 0.875rem);
+		font-weight: 500;
+		line-height: 1.2;
+		cursor: pointer;
+		transition: color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+	}
+	.kb-tab-btn:hover:not([aria-disabled='true']) {
+		color: var(--sl-color-white, #fff);
+		background: rgba(255, 255, 255, 0.06);
+	}
+	.kb-tab-btn:focus-visible {
+		outline: 2px solid var(--sl-color-accent, #4e8);
+		outline-offset: 2px;
+	}
+	.kb-tab-btn[aria-selected='true'] {
+		color: var(--sl-color-white, #fff);
+		background: var(--sl-color-accent, #2b9090);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+	}
+	.kb-tab-btn--placeholder {
+		min-width: 2rem;
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+	.kb-panel[hidden] {
+		display: none;
+	}
+</style>
+
+<script>
+	// 仅把导航按钮条移出 .sl-markdown-content（毛玻璃正文容器）作为前一个兄弟节点；
+	// 正文面板留在容器内，保持毛玻璃效果。
+	const tabsRoot = document.querySelector('[data-tabs]');
+	const tabbar = tabsRoot?.querySelector('.kb-tabbar');
+	const md = tabsRoot?.closest('.sl-markdown-content');
+	if (tabbar && md && md.parentNode) {
+		md.parentNode.insertBefore(tabbar, md);
+	}
+
+	// 导航栏标签切换：点击不同标签显示对应内容面板（默认显示「首页」）
+	// 注意：按钮条可能已被移出 [data-tabs]，因此用全局查询而非限定在 tabsRoot 内。
+	if (tabsRoot) {
+		const buttons = document.querySelectorAll('.kb-tab-btn');
+		const panels = tabsRoot.querySelectorAll('.kb-panel');
+		buttons.forEach((button) => {
+			button.addEventListener('click', () => {
+				if (button.getAttribute('aria-disabled') === 'true') return;
+				const target = button.getAttribute('data-tab');
+				buttons.forEach((b) => {
+					b.setAttribute('aria-selected', b.getAttribute('data-tab') === target ? 'true' : 'false');
+				});
+				panels.forEach((panel) => {
+					if (panel.getAttribute('data-panel') === target) {
+						panel.removeAttribute('hidden');
+					} else {
+						panel.setAttribute('hidden', '');
+					}
+				});
+			});
+		});
+	}
+</script>
