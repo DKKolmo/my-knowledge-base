@@ -5,7 +5,7 @@ import starlight from '@astrojs/starlight';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.kkolmo.com',
-  base: '/my-knowledge-base',
+  // base: '/my-knowledge-base',
   integrations: [
     starlight({
       title: "Kolmo's Blog",
