@@ -48,12 +48,12 @@ import HomeTabs from '../../components/HomeTabs.astro';
 ### 拓扑优化
 
 <CardGrid stagger>
-	<Card title="SIMP 变密度法" icon="set">以单元相对密度为设计变量，通过惩罚项将中间密度推向 0/1。</Card>
-	<Card title="水平集法" icon="rocket">以水平集函数描述结构边界，通过 Hamilton-Jacobi 方程驱动边界演化。</Card>
-	<Card title="ESO / BESO" icon="shuffle">依据单元灵敏度删除/添加材料，迭代演化结构。</Card>
-	<Card title="MMC / MMV" icon="move">以少量显式几何描述子作为设计变量，实现显式拓扑优化。</Card>
-	<Card title="相场法" icon="document">以连续相场变量描述材料分布，通过能量泛函最小化驱动演化。</Card>
-	<Card title="拓扑导数" icon="external">针对结构开孔/闭孔的灵敏度分析，常与水平集等方法结合。</Card>
+	<LinkCard title="SIMP 变密度法" description="以单元相对密度为设计变量，通过惩罚项将中间密度推向 0/1。" href="/guides/优化/拓扑优化/"></LinkCard>
+	<LinkCard title="水平集法" description="以水平集函数描述结构边界，通过 Hamilton-Jacobi 方程驱动边界演化。" href="/guides/优化/拓扑优化/"></LinkCard>
+	<LinkCard title="ESO / BESO" description="依据单元灵敏度删除/添加材料，迭代演化结构。" href="/guides/优化/拓扑优化/"></LinkCard>
+	<LinkCard title="MMC / MMV" description="以少量显式几何描述子作为设计变量，实现显式拓扑优化。" href="/guides/优化/拓扑优化/"></LinkCard>
+	<LinkCard title="相场法" description="以连续相场变量描述材料分布，通过能量泛函最小化驱动演化。" href="/guides/优化/拓扑优化/"></LinkCard>
+	<LinkCard title="拓扑导数" description="针对结构开孔/闭孔的灵敏度分析，常与水平集等方法结合。" href="/guides/优化/拓扑优化/"></LinkCard>
 </CardGrid>
 
 </div>
@@ -63,10 +63,10 @@ import HomeTabs from '../../components/HomeTabs.astro';
 ### 加劲肋优化
 
 <CardGrid stagger>
-	<Card title="尺寸优化" icon="pencil">优化加劲肋截面尺寸（高度、厚度等）。</Card>
-	<Card title="位置优化" icon="pin">优化加劲肋的几何位置（间距、走向）。</Card>
-	<Card title="形状优化" icon="document">同时考虑加劲肋的几何形状（路径曲线、截面轮廓）。</Card>
-	<Card title="拓扑优化" icon="set">自由决定加劲肋的有无、数量与整体拓扑布局。</Card>
+	<LinkCard title="尺寸优化" description="优化加劲肋截面尺寸（高度、厚度等）。" href="/guides/优化/加劲肋优化/"></LinkCard>
+	<LinkCard title="位置优化" description="优化加劲肋的几何位置（间距、走向）。" href="/guides/优化/加劲肋优化/"></LinkCard>
+	<LinkCard title="形状优化" description="同时考虑加劲肋的几何形状（路径曲线、截面轮廓）。" href="/guides/优化/加劲肋优化/"></LinkCard>
+	<LinkCard title="拓扑优化" description="自由决定加劲肋的有无、数量与整体拓扑布局。" href="/guides/优化/加劲肋优化/"></LinkCard>
 </CardGrid>
 
 </div>
@@ -76,13 +76,13 @@ import HomeTabs from '../../components/HomeTabs.astro';
 ### 优化求解器
 
 <CardGrid stagger>
-	<Card title="OC 优化准则法" icon="setting">基于 KKT 条件构造固定点迭代格式，实现简单。</Card>
-	<Card title="MMA 移动渐近线法" icon="external">构造移动的线性/二次近似子问题，鲁棒性强。</Card>
-	<Card title="SQP 序列二次规划" icon="shuffle">每步求解 QP 子问题确定搜索方向，收敛快。</Card>
-	<Card title="内点法" icon="document">通过障碍函数将不等式约束转化为子问题求解。</Card>
-	<Card title="GA 遗传算法" icon="random">基于选择、交叉、变异的群体进化，全局搜索能力强。</Card>
-	<Card title="PSO 粒子群" icon="rocket">通过个体最优与全局最优位置更新粒子。</Card>
-	<Card title="SA 模拟退火" icon="restart">以概率接受劣解跳出局部最优，适合组合优化。</Card>
+	<LinkCard title="OC 优化准则法" description="基于 KKT 条件构造固定点迭代格式，实现简单。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="MMA 移动渐近线法" description="构造移动的线性/二次近似子问题，鲁棒性强。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="SQP 序列二次规划" description="每步求解 QP 子问题确定搜索方向，收敛快。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="内点法" description="通过障碍函数将不等式约束转化为子问题求解。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="GA 遗传算法" description="基于选择、交叉、变异的群体进化，全局搜索能力强。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="PSO 粒子群" description="通过个体最优与全局最优位置更新粒子。" href="/guides/优化/优化求解器/"></LinkCard>
+	<LinkCard title="SA 模拟退火" description="以概率接受劣解跳出局部最优，适合组合优化。" href="/guides/优化/优化求解器/"></LinkCard>
 </CardGrid>
 
 </div>
@@ -92,10 +92,10 @@ import HomeTabs from '../../components/HomeTabs.astro';
 ### 算例测试
 
 <CardGrid stagger>
-	<Card title="MBB 梁" icon="document">经典简支梁最小柔度算例，常用基准测试。</Card>
-	<Card title="悬臂梁" icon="document">一端固支、自由端受载，考察边界效应响应。</Card>
-	<Card title="L 型梁" icon="document">含内角几何特征，考察应力集中与约束处理。</Card>
-	<Card title="交互演示" icon="code">用 Canvas 实时渲染密度演化，支持参数调节。</Card>
+	<LinkCard title="MBB 梁" description="经典简支梁最小柔度算例，常用基准测试。" href="/guides/优化/算例测试/"></LinkCard>
+	<LinkCard title="悬臂梁" description="一端固支、自由端受载，考察边界效应响应。" href="/guides/优化/算例测试/"></LinkCard>
+	<LinkCard title="L 型梁" description="含内角几何特征，考察应力集中与约束处理。" href="/guides/优化/算例测试/"></LinkCard>
+	<LinkCard title="交互演示" description="用 Canvas 实时渲染密度演化，支持参数调节。" href="/guides/优化/算例测试/"></LinkCard>
 </CardGrid>
 
 </div>
