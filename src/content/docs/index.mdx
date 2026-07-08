@@ -5,15 +5,7 @@ description: Get started building your docs site with Starlight.
 hero:
   tagline: Congrats on setting up a new Starlight project!
   image:
-    file: ../../assets/houston.webp
-  actions:
-    - text: Example Guide
-      link: /guides/example/
-      icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+    file: ../../assets/章鱼哥.webp
 ---
 
 import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
@@ -21,34 +13,92 @@ import HomeTabs from '../../components/HomeTabs.astro';
 
 <HomeTabs>
 
-## Next steps
+## 前言
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="前言" icon="add-document">
+		前言.
+	</Card>	
+	<Card title="拓扑优化学习基础————有限元方法" icon="math">
+		掌握单元、节点、形函数、刚度矩阵、边界条件施加、数值积分、线性方程组求解等内容。
+		拓扑优化中的结构响应分析通常依赖有限元求解，例如计算柔度、位移场、应力场和灵敏度。
 	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
+	<Card title="拓扑优化学习基础————弹性力学" icon="setting">
+		作用：从更一般的角度理解应力张量、应变张量、本构关系、平衡方程和弱形式。
+		有助于理解拓扑优化的数学模型、变分形式、灵敏度推导以及壳体、三维实体、复合材料等复杂结构问题。
+	</Card>	
+	<Card title="拓扑优化学习基础————matlab" icon="open-book">
+		matlab编程基础。
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+	<Card title="拓扑优化学习基础————数值优化方法" icon="math">
+		作用：理解目标函数、约束、梯度、KKT 条件、拉格朗日乘子、MMA、OC、SQP 等优化算法。
+		拓扑优化本质上是一个大规模约束优化问题，例如最小柔度、体积分数约束、频率约束、屈曲约束等。
+	</Card>	
+	
 </CardGrid>
 
 <div slot="optim">
 
 ## 优化
 
-此分区将用于集中展示「优化」主题的精选内容概览。
+当前阶段的学习主题，包含以下四个模块：
 
-完整结构与学习笔记请前往：<LinkCard href="/guides/优化/">优化主题专题</LinkCard>
+<div class="optim-glass">
+
+### 拓扑优化
+
+<CardGrid stagger>
+	<Card title="SIMP 变密度法" icon="set">以单元相对密度为设计变量，通过惩罚项将中间密度推向 0/1。</Card>
+	<Card title="水平集法" icon="rocket">以水平集函数描述结构边界，通过 Hamilton-Jacobi 方程驱动边界演化。</Card>
+	<Card title="ESO / BESO" icon="shuffle">依据单元灵敏度删除/添加材料，迭代演化结构。</Card>
+	<Card title="MMC / MMV" icon="move">以少量显式几何描述子作为设计变量，实现显式拓扑优化。</Card>
+	<Card title="相场法" icon="document">以连续相场变量描述材料分布，通过能量泛函最小化驱动演化。</Card>
+	<Card title="拓扑导数" icon="external">针对结构开孔/闭孔的灵敏度分析，常与水平集等方法结合。</Card>
+</CardGrid>
+
+</div>
+
+<div class="optim-glass">
+
+### 加劲肋优化
+
+<CardGrid stagger>
+	<Card title="尺寸优化" icon="pencil">优化加劲肋截面尺寸（高度、厚度等）。</Card>
+	<Card title="位置优化" icon="pin">优化加劲肋的几何位置（间距、走向）。</Card>
+	<Card title="形状优化" icon="document">同时考虑加劲肋的几何形状（路径曲线、截面轮廓）。</Card>
+	<Card title="拓扑优化" icon="set">自由决定加劲肋的有无、数量与整体拓扑布局。</Card>
+</CardGrid>
+
+</div>
+
+<div class="optim-glass">
+
+### 优化求解器
+
+<CardGrid stagger>
+	<Card title="OC 优化准则法" icon="setting">基于 KKT 条件构造固定点迭代格式，实现简单。</Card>
+	<Card title="MMA 移动渐近线法" icon="external">构造移动的线性/二次近似子问题，鲁棒性强。</Card>
+	<Card title="SQP 序列二次规划" icon="shuffle">每步求解 QP 子问题确定搜索方向，收敛快。</Card>
+	<Card title="内点法" icon="document">通过障碍函数将不等式约束转化为子问题求解。</Card>
+	<Card title="GA 遗传算法" icon="random">基于选择、交叉、变异的群体进化，全局搜索能力强。</Card>
+	<Card title="PSO 粒子群" icon="rocket">通过个体最优与全局最优位置更新粒子。</Card>
+	<Card title="SA 模拟退火" icon="restart">以概率接受劣解跳出局部最优，适合组合优化。</Card>
+</CardGrid>
+
+</div>
+
+<div class="optim-glass">
+
+### 算例测试
+
+<CardGrid stagger>
+	<Card title="MBB 梁" icon="document">经典简支梁最小柔度算例，常用基准测试。</Card>
+	<Card title="悬臂梁" icon="document">一端固支、自由端受载，考察边界效应响应。</Card>
+	<Card title="L 型梁" icon="document">含内角几何特征，考察应力集中与约束处理。</Card>
+	<Card title="交互演示" icon="code">用 Canvas 实时渲染密度演化，支持参数调节。</Card>
+</CardGrid>
+
+</div>
 
 </div>
 

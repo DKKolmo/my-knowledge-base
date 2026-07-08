@@ -43,6 +43,31 @@
 		width: 100%;
 		--sl-content-margin-inline: auto;
 	}
+	/* 优化面板内每个毛玻璃块，视觉与首页 .sl-markdown-content 一致 */
+	.optim-glass {
+		position: relative;
+		z-index: 1;
+		padding: 1.25rem;
+		margin: 1.5rem 0;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.01);
+		backdrop-filter: blur(50px);
+		-webkit-backdrop-filter: blur(50px);
+	}
+	.optim-glass h3 {
+		margin-top: 0;
+	}
+	/* 切到「优化」面板时去掉外层 .sl-markdown-content 的毛玻璃，
+	   让其中的独立毛玻璃块直接贴在背景上（避免毛玻璃套毛玻璃）。 */
+	.sl-markdown-content.kb-md--flat {
+		padding: 0;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+	}
 </style>
 
 <style>
@@ -117,21 +142,52 @@
 	if (tabsRoot) {
 		const buttons = document.querySelectorAll('.kb-tab-btn');
 		const panels = tabsRoot.querySelectorAll('.kb-panel');
+
+		// 各 TOC 条目（li）按其链接锚点归属的面板分类，用于随标签切换显隐。
+		// 锚点 -> 面板：'next-steps' 属首页；'优化' 系列 属优化；其余（如 _top）常驻。
+		const optimAnchors = ['优化', '拓扑优化', '加劲肋优化', '优化求解器', '算例测试'];
+		const tocItems = Array.from(document.querySelectorAll('.right-sidebar-panel li'));
+		const classifyTocItem = (li) => {
+			const href = li.querySelector('a')?.getAttribute('href') || '';
+			const anchor = decodeURIComponent(href.replace(/^#/, ''));
+			if (anchor === 'next-steps') return 'home';
+			if (optimAnchors.includes(anchor)) return 'optim';
+			return 'common';
+		};
+
+		const activateTab = (target) => {
+			// 1) 按钮高亮
+			buttons.forEach((b) => {
+				b.setAttribute('aria-selected', b.getAttribute('data-tab') === target ? 'true' : 'false');
+			});
+			// 2) 面板显隐
+			panels.forEach((panel) => {
+				if (panel.getAttribute('data-panel') === target) {
+					panel.removeAttribute('hidden');
+				} else {
+					panel.setAttribute('hidden', '');
+				}
+			});
+			// 3) 外层毛玻璃：优化面板含独立毛玻璃块，切到它时去掉外层毛玻璃避免套娃
+			if (md) {
+				md.classList.toggle('kb-md--flat', target === 'optim');
+			}
+			// 4) 右侧目录：仅显示当前面板相关的条目（common 常驻）
+			tocItems.forEach((li) => {
+				const group = classifyTocItem(li);
+				const show = group === 'common' || group === target;
+				li.style.display = show ? '' : 'none';
+			});
+		};
+
 		buttons.forEach((button) => {
 			button.addEventListener('click', () => {
 				if (button.getAttribute('aria-disabled') === 'true') return;
-				const target = button.getAttribute('data-tab');
-				buttons.forEach((b) => {
-					b.setAttribute('aria-selected', b.getAttribute('data-tab') === target ? 'true' : 'false');
-				});
-				panels.forEach((panel) => {
-					if (panel.getAttribute('data-panel') === target) {
-						panel.removeAttribute('hidden');
-					} else {
-						panel.setAttribute('hidden', '');
-					}
-				});
+				activateTab(button.getAttribute('data-tab'));
 			});
 		});
+
+		// 初始化：默认「首页」面板，同步右侧目录
+		activateTab('home');
 	}
 </script>
